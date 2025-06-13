@@ -95,5 +95,136 @@
     <script>
         document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>
+    <script>
+  (function() {
+    const containerElements = document.querySelectorAll('.container');
+    const menu = document.querySelector('nav .menu');
+
+    // Injetar estilos via JS para responsividade
+    function aplicarEstilosResponsivos() {
+      // Container centralizado e com padding
+      containerElements.forEach(container => {
+        container.style.maxWidth = '100%';
+        container.style.padding = '0 15px';
+        container.style.boxSizing = 'border-box';
+        container.style.margin = '0 auto';
+      });
+
+      // Tornar o menu uma lista vertical escondida para celular
+      if (window.innerWidth <= 768) {
+        if (!document.getElementById('btnMenu')) {
+          // Criar botão hamburguer
+          const btnMenu = document.createElement('button');
+          btnMenu.id = 'btnMenu';
+          btnMenu.setAttribute('aria-label', 'Abrir menu');
+          btnMenu.style.fontSize = '1.8rem';
+          btnMenu.style.background = 'transparent';
+          btnMenu.style.border = 'none';
+          btnMenu.style.cursor = 'pointer';
+          btnMenu.style.color = '#007BFF';
+          btnMenu.style.position = 'absolute';
+          btnMenu.style.top = '20px';
+          btnMenu.style.right = '15px';
+          btnMenu.innerHTML = '&#9776;'; // ☰
+          document.querySelector('nav .container').appendChild(btnMenu);
+
+          // Esconder menu e deixar vertical
+          menu.style.display = 'none';
+          menu.style.flexDirection = 'column';
+          menu.style.padding = '0';
+          menu.style.marginTop = '10px';
+          menu.style.backgroundColor = '#f9f9f9';
+          menu.style.position = 'absolute';
+          menu.style.top = '60px';
+          menu.style.right = '15px';
+          menu.style.border = '1px solid #ddd';
+          menu.style.borderRadius = '5px';
+          menu.style.width = '180px';
+          menu.style.zIndex = '999';
+
+          // Ajustar links do menu
+          menu.querySelectorAll('li').forEach(li => {
+            li.style.padding = '10px 15px';
+            li.style.borderBottom = '1px solid #eee';
+          });
+          menu.querySelectorAll('li:last-child')[0].style.borderBottom = 'none';
+
+          // Evento abrir/fechar menu
+          btnMenu.addEventListener('click', () => {
+            if (menu.style.display === 'none') {
+              menu.style.display = 'flex';
+              btnMenu.setAttribute('aria-label', 'Fechar menu');
+            } else {
+              menu.style.display = 'none';
+              btnMenu.setAttribute('aria-label', 'Abrir menu');
+            }
+          });
+        }
+      } else {
+        // Para telas maiores: mostrar menu horizontal e remover botão hamburguer
+        if (document.getElementById('btnMenu')) {
+          document.getElementById('btnMenu').remove();
+        }
+        menu.style.display = 'flex';
+        menu.style.flexDirection = 'row';
+        menu.style.position = 'static';
+        menu.style.width = 'auto';
+        menu.style.backgroundColor = 'transparent';
+        menu.style.border = 'none';
+        menu.querySelectorAll('li').forEach(li => {
+          li.style.padding = '0 10px';
+          li.style.borderBottom = 'none';
+        });
+      }
+
+      // Ajustes gerais de fonte e imagens para mobile
+      document.body.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+      document.body.style.lineHeight = '1.6';
+      document.body.style.margin = '0';
+      document.body.style.padding = '0';
+
+      // Tornar imagens responsivas
+      const imgs = document.querySelectorAll('img, video');
+      imgs.forEach(el => {
+        el.style.maxWidth = '100%';
+        el.style.height = 'auto';
+        el.style.borderRadius = '8px';
+        el.style.display = 'block';
+        el.style.marginBottom = '15px';
+      });
+
+      // Ajustar títulos para mobile
+      const h1s = document.querySelectorAll('h1');
+      h1s.forEach(h1 => {
+        h1.style.fontSize = window.innerWidth <= 480 ? '1.6rem' : '2.2rem';
+        h1.style.marginBottom = '0.3em';
+      });
+
+      const h2s = document.querySelectorAll('h2');
+      h2s.forEach(h2 => {
+        h2.style.fontSize = window.innerWidth <= 480 ? '1.2rem' : '1.6rem';
+        h2.style.marginBottom = '0.5em';
+      });
+
+      // Ajustar parágrafos
+      const ps = document.querySelectorAll('p');
+      ps.forEach(p => {
+        p.style.fontSize = window.innerWidth <= 480 ? '1rem' : '1.1rem';
+        p.style.marginBottom = '1em';
+      });
+
+      // Ajustar container do main para mobile
+      const mainContainer = document.querySelector('main.container');
+      if(mainContainer) {
+        mainContainer.style.padding = window.innerWidth <= 480 ? '10px 10px 30px' : '20px';
+      }
+    }
+
+    // Executa na carga e resize da janela
+    aplicarEstilosResponsivos();
+    window.addEventListener('resize', aplicarEstilosResponsivos);
+  })();
+</script>
+
 </body>
 </html>
